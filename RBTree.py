@@ -32,6 +32,21 @@ class RBTree:
         # se a arvore não estiver vazia #
         if node is not None:
             
+            # se for folha #
+            if node.left is None and node.right is None:
+                
+                # cria um novo nó #
+                newNode = RBTreeNode(item, key, parent=node)
+
+                # define se é filho direito ou esquerdo #
+                if key >= node.key:
+                    node.right = newNode
+                else:
+                    node.left = newNode
+                
+                self.corrigir(newNode)
+                return True
+
             # se tiver filho direito #
             if node.right != None:
                 
@@ -46,19 +61,9 @@ class RBTree:
                 if key < node.key:
                     self.insert(item, key, node.left)
             
-            # se for folha #
-            if node.left is None and node.right is None:
+            
                 
-                # cria um novo nó #
-                newNode = RBTreeNode(item, key, parent=node)
-
-                # define se é filho direito ou esquerdo #
-                if key >= node.key:
-                    node.right = newNode
-                else:
-                    node.left = newNode
-
-                self.corrigir(newNode)
+            
 
         # se a arvore estiver vazia #
         else:
@@ -66,8 +71,8 @@ class RBTree:
                 newNode = RBTreeNode(item, key, parent=None)
 
                 self.root = newNode
-
                 self.corrigir(newNode)
+                return True
         
 
     def corrigir(self, node):
@@ -143,8 +148,8 @@ class RBTree:
                         if avo.color == BLACK and pai.color == RED:
                             
                             # recolore o pai e o avô
-                            pai.recolorir()
-                            avo.recolorir()
+                            # pai.recolorir()
+                            # avo.recolorir()
 
                             # realiza-se uma rotação simples a direita
                             avo.right = node.rotacaoDireita()
@@ -166,8 +171,8 @@ class RBTree:
                         if avo.color == BLACK and pai.color == RED:
                             
                             # recolore o pai e o avô
-                            pai.recolorir()
-                            avo.recolorir()
+                            # pai.recolorir()
+                            # avo.recolorir()
 
                             # realiza-se uma rotação simples a esqueda
                             avo.left = node.rotacaoEsquerda()
@@ -179,3 +184,4 @@ class RBTree:
                                     avo.parent.right = pai.rotacaoDireita()
                             else:
                                 self.root = pai.rotacaoDireita()
+                self.corrigir(pai)
