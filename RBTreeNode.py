@@ -1,4 +1,4 @@
-from RBTree import RBTree
+
 
 BLACK = True
 RED   = False
@@ -6,16 +6,17 @@ RED   = False
 class RBTreeNode:
 
     # construtor do nó #
-    def __init__(self, item, parent, left=None, right=None):
+    def __init__(self, item, key, parent=None, left=None, right=None):
         self.parent = parent
         self.left = left
         self.right = right
-        self.color = False
+        self.color = RED
         self.item = item
+        self.key = key
 
     # representação do nó como uma string #
     def __str__(self):
-        if self.color == True:
+        if self.color == BLACK:
             return str(self.item) + '\tBLACK'
         else:
             return str(self.item) + '\tRED'
@@ -74,7 +75,10 @@ class RBTreeNode:
             self.right.parent = self.parent
         
         self.right = self.parent
-        self.parent = self.right.parent
+        if self.right is not None:
+            self.parent = self.right.parent
+        else:
+            self.parent = None
         self.right.parent = self
 
         return self
