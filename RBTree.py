@@ -87,9 +87,11 @@ class RBTree:
             pai = node.parent
 
             if tio != None and tio.color == RED:
-                node.recolorir()
-                avo.recolorir()
-                tio.recolorir()
+                pai.color = BLACK
+                avo.color = RED
+                tio.color = BLACK
+
+                self.corrigir(avo)
             
             # caso 3 #
             else:
